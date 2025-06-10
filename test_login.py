@@ -1,25 +1,30 @@
+import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 import time
 
-options = Options()
-options.add_argument("--headless")  # Run headless
-options.add_argument("--disable-gpu")
-options.add_argument("--window-size=1920,1080")  # Make sure page is fully visible
-options.add_argument("--no-sandbox")
-options.add_argument("--disable-dev-shm-usage")
+@pytest.fixture
+def driver():
+    options = Options()
+    options.add_argument("--headless")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--window-size=1920,1080")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    
+    driver = webdriver.Chrome(options=options)
+    yield driver
+    driver.quit()
 
-driver = webdriver.Chrome(options=options)
-driver.get("https://www.saucedemo.com/")
-driver.find_element(By.ID, "user-name").send_keys("standard_user")
-driver.find_element(By.ID, "password").send_keys("secret_sauce")
-driver.find_element(By.ID, "login-button").click()
+def test_login_success(driver):
+    driver.get("https://www.saucedemo.com/")
+    driver.find_element(By.ID, "user-name").send_keys("standard_user")
+    driver.find_element(By.ID, "password").send_keys("secret_sauce")
+    driver.find_element(By.ID, "login-button").click()
 
-assert "inventory" in driver.current_url
-
-
-print("Test passed: Login successful!")
-driver.save_screenshot("login_success.png")
-time.sleep(3)
-driver.quit()
+    assert "inventory" in driver.current_url, "Login failed or did not redirect to inventory page"
+    
+    driver.save_screenshot("login_success.png")
+    print("Test passed: Login successful!")
+    time.sleep(3)
