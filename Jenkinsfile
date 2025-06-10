@@ -11,13 +11,13 @@ pipeline {
 
         stage('Install Selenium') {
             steps {
-                sh 'python -m pip install selenium'
+                bat 'python -m pip install selenium'
             }
         }
 
         stage('Run Selenium Test') {
             steps {
-                sh 'python test_login.py'
+                bat 'python test_login.py'
             }
         }
     }
