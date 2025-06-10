@@ -10,5 +10,8 @@ driver.find_element(By.ID, "login-button").click()
 
 assert "inventory" in driver.current_url
 
+
 print("Test passed: Login successful!")
+driver.save_screenshot("login_success.png")
+time.sleep(3)
 driver.quit()
