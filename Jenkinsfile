@@ -2,35 +2,21 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout Code') {
+        stage('Install Dependencies') {
             steps {
-                git branch: 'main', url: 'https://github.com/vijaysayyaparaju/selenium-ci-demo.git'
-
+                bat 'python -m pip install -r requirements.txt'
             }
         }
-
-        stage('Install Selenium') {
+        stage('Run Tests') {
             steps {
-                bat 'python -m pip install selenium'
-            }
-        }
-
-        stage('Run Selenium Test') {
-            steps {
-                bat 'python test_login.py'
+                bat 'pytest --html=reports/report.html'
             }
         }
     }
 
     post {
         always {
-            echo 'Build completed!'
-        }
-        failure {
-            echo 'Build failed ❌'
-        }
-        success {
-            echo 'Build succeeded ✅'
+            archiveArtifacts artifacts: 'reports/*.html, reports/*.png', allowEmptyArchive: true
         }
     }
 }
