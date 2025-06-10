@@ -25,6 +25,6 @@ def test_login_success(driver):
 
     assert "inventory" in driver.current_url, "Login failed or did not redirect to inventory page"
     
-    driver.save_screenshot("login_success.png")
+    driver.save_screenshot("reports/login_success.png")
     print("Test passed: Login successful!")
     time.sleep(3)
