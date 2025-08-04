@@ -38,5 +38,5 @@ def test_login_success(driver):
     timestamp = time.strftime("%Y%m%d_%H%M%S")
     driver.save_screenshot(f"reports/loginsuccess_{timestamp}.png") 
 
-    print("Test passed: Login successful!")
+    print("Test passed: Login successfully")
     time.sleep(1)  # Shorter sleep for the  CircleCI
