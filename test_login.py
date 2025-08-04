@@ -36,7 +36,7 @@ def test_login_success(driver):
     assert "inventory" in driver.current_url, "Login failed or did not redirect to inventory page"
 
     timestamp = time.strftime("%Y%m%d_%H%M%S")
-    driver.save_screenshot(f"reports/loginsuccess_{timestamp}.png") 
+    driver.save_screenshot(f"reports/loginsuccessfully_{timestamp}.png") 
 
     print("Test passed: Login successfully")
     time.sleep(1)  # Shorter sleep for the  CircleCI
